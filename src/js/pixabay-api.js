@@ -1,10 +1,8 @@
 import axios from 'axios';
+import { imagesTemplate } from './render-functions';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import { hideLoader } from './render-functions';
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
-import { imageTemplate } from './render-functions';
 
 export const refs = {
   form: document.querySelector('.search-form'),
@@ -13,11 +11,6 @@ export const refs = {
   gallery: document.querySelector('.gallery'),
   loader: document.querySelector('.loader-box'),
 };
-
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-});
 
 export function createImages(query) {
   const BASE_URL = 'https://pixabay.com/api/';
@@ -38,14 +31,12 @@ export function createImages(query) {
           message: `No images found for your search.`,
           position: 'topRight',
         });
-        hideLoader();
       } else {
         refs.input.value = '';
-        const markup = data.hits.map(imageTemplate).join('');
+        const markup = imagesTemplate(data.hits);
 
         refs.gallery.innerHTML = markup;
         hideLoader();
-        lightbox.refresh();
       }
     })
 
