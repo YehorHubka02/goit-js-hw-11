@@ -5,7 +5,6 @@ import 'izitoast/dist/css/iziToast.min.css';
 import { hideLoader } from './render-functions';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { imageTemplate } from './render-functions';
 
 
 export const refs = {
@@ -40,13 +39,14 @@ export function createImages(query) {
           title: 'No Results',
           message: `No images found for your search.`,
           position: 'topRight',
+          progressBar: false
         });
       } else {
         refs.input.value = '';
         const markup = imagesTemplate(data.hits);
-
         refs.gallery.innerHTML = markup;
         hideLoader();
+        lightbox.refresh();
       }
     })
 
@@ -56,6 +56,7 @@ export function createImages(query) {
         title: 'Error',
         message: `❌ Error fetching images. Please try again!`,
         position: 'topRight',
+        progressBar: false
       });
     });
 }

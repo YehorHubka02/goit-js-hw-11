@@ -35,6 +35,7 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
+
 export function showLoader() {
   refs.gallery.classList.add('hidden');
   refs.loader.classList.remove('hidden');
@@ -46,7 +47,6 @@ export function hideLoader() {
 }
 
 export function imagesTemplate(arr) {
-  lightbox.refresh();
   hideLoader();
   return arr.map(imageTemplate).join('');
 }
